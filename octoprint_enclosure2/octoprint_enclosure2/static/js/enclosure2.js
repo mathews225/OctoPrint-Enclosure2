@@ -77,40 +77,15 @@ $(function() {
               data.rpi_output.forEach(function(gpio) {
                   key = Object.keys(gpio)[0];
                   if(gpio[key]){
-                    $("#btn_off_"+key).hide();
+                    $("#btn_off_"+key).removeClass('active');
                     $("#btn_on_"+key).addClass('active');
-                  }
-                  else{
+                  }else{
                     $("#btn_off_"+key).addClass('active');
-                    $("#btn_on_"+key).hide();
+                    $("#btn_on_"+key).removeClass('active');
                   }
-
-                  // Petes Code //
-                  $("#btn_off_"+key).toggle();
-                  $("#btn_on_"+key).toggle();
-
-                  // End of Pete //
-
               });
               self.previousGpioStatus = data.rpi_output;
             }
-
-
-
-            // Petes Code //
-           if(data.rpi_output){
-             data.rpi_output.forEach(function(gpio) {
-                 key = Object.keys(gpio)[0];
-                 if(gpio[key]){
-                   $("#togg_btn_"+key).innerHTML('Off');
-                 }
-                 else{
-                   $("#togg_btn_"+key).innerHTML('On');
-                 }
-             });
-             self.previousGpioStatus = data.rpi_output;
-           }
-            // End of Pete //
 
             if(data.rpi_output_pwm){
               data.rpi_output_pwm.forEach(function(gpio) {

@@ -53,10 +53,10 @@
 <div data-bind="foreach: global_settings.settings.plugins.enclosure2.rpi_outputs">
   <!-- ko if: ($data.outputType() == "regular")  -->
   <h4><p data-bind="html: label"></p></h4>
-  <button type="submit" data-bind="click: $root.handleIO.bind($data, [gpioPin(), 'on']),
-  enable: $root.enableBtn(), attr: {id: 'btn_on_' + $data.gpioPin()}" class="btn">Turn On</button>
+  <button type="submit" data-bind="click: $root.handleIO.bind($data, [gpioPin()]),
+  enable: $root.enableBtn(), attr: {id: 'togg_btn_' + $data.gpioPin()}" class="btn">Off</button>
   <button type="submit" data-bind="click: $root.handleIO.bind($data, [gpioPin(), 'off']),
-  enable: $root.enableBtn(), attr: {id: 'btn_off_' + $data.gpioPin()}"   class="btn">Turn Off</button>
+  enable: $root.enableBtn(), attr: {id: 'btn_off_' + $data.gpioPin()}"   class="btn">Turn off</button>
   <!-- /ko -->
   <!-- ko if: ($data.outputType() == "pwm")  -->
   <h4><p data-bind="html: label"></p></h4>
@@ -92,11 +92,3 @@
   </table>
   <!-- /ko -->
 </div>
-
-
-wwwwwww
-
-$('#tog').click(function(e){  
-  e.preventDefault();
-  togStatus.reverse()[0]();
-});

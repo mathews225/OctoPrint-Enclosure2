@@ -1,6 +1,6 @@
-<form class="form-horizontal" id="enclosure_settings_temperature">
+<form class="form-horizontal" id="enclosure2_settings_temperature">
   <h4>{{ _('Temperature Sensor') }}</h4>
-  <div data-bind="foreach: global_settings.settings.plugins.enclosure.temperature_reading">
+  <div data-bind="foreach: global_settings.settings.plugins.enclosure2.temperature_reading">
     <div class="controls">
       <label class="checkbox">
         <input id="enableTemperatureReading" type="checkbox"
@@ -9,7 +9,7 @@
     </div>
     <div  id="temperature_reading_content">
       <div class="control-group">
-        <label class="control-label" for="settings-enclosure-dhtModel">{{ _('Sensor Type') }}</label>
+        <label class="control-label" for="settings-enclosure2-dhtModel">{{ _('Sensor Type') }}</label>
         <div class="controls">
           <select data-bind="value: sensorType">
             <option value="">Select Sensor</option>
@@ -22,12 +22,12 @@
             <option value="tmp102">TMP102</option>
           </select>
           <span class="help-inline"> <span class="label label-important">Attention</span> You need to install and configure the necessary
-          libraries for the temperature sensor, check the documentation on <a href=" https://github.com/vitormhenrique/OctoPrint-Enclosure">github</a> page</span>
+          libraries for the temperature sensor, check the documentation on <a href=" https://github.com/vitormhenrique/OctoPrint-Enclosure2">github</a> page</span>
         </div>
       </div>
       <!-- ko if: ($data.sensorType() == "18b20")  -->
       <div class="control-group">
-        <label class="control-label" for="settings-enclosure-dhtPin">{{ _('Sensor Pin') }}</label>
+        <label class="control-label" for="settings-enclosure2-dhtPin">{{ _('Sensor Pin') }}</label>
         <div class="controls">
           <input type="text" class="input-block-level" data-bind="value: gpioPin" value="4" disabled="true">
           <span class="help-inline">GPIO pin for temperature sensor, recommended to use 4 as DS18B20 only works on pin 4</span>
@@ -36,14 +36,14 @@
       <!-- /ko -->
       <!-- ko if: ($data.sensorType() == "si7021") || ($data.sensorType() == "bme280") || ($data.sensorType() == "tmp102") -->
       <div class="control-group">
-        <label class="control-label" for="settings-enclosure-dhtPin">{{ _('Sensor Pin') }}</label>
+        <label class="control-label" for="settings-enclosure2-dhtPin">{{ _('Sensor Pin') }}</label>
         <div class="controls">
           <input type="text" class="input-block-level" value="SCL / SDA" disabled="true">
           <span class="help-inline">GPIO pin for temperature sensor need to connect the sensor to I2C. SCL	Clock to GPIO 3 (SCL) and SDA	Data to	GPIO 2 (SDA)</span>
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="settings-enclosure-dhtPin">{{ _('Sensor Address') }}</label>
+        <label class="control-label" for="settings-enclosure2-dhtPin">{{ _('Sensor Address') }}</label>
         <div class="controls">
           <input type="text" class="input-block-level" data-bind="value: sensorAddress">
           <span class="help-inline">Sensor address in HEX value, you can find it by runing <code>i2cdetect -y 1</code> on your Raspberry Pi</span>
@@ -52,7 +52,7 @@
       <!-- /ko -->
       <!-- ko ifnot: ($data.sensorType() == "18b20") || ($data.sensorType() == "si7021") || ($data.sensorType() == "bme280") || ($data.sensorType() == "tmp102") -->
       <div class="control-group">
-        <label class="control-label" for="settings-enclosure-dhtPin">{{ _('Sensor Pin') }}</label>
+        <label class="control-label" for="settings-enclosure2-dhtPin">{{ _('Sensor Pin') }}</label>
         <div class="controls">
           <input type="text" class="input-block-level" data-bind="value: gpioPin">
           <span class="help-inline">GPIO pin for temperature sensor, recommended to use 4 as DS18B20 only works on pin 4</span>
@@ -70,7 +70,7 @@
 </form>
 <form class="form-horizontal">
   <h4>{{ _('Temperature Control') }}</h4>
-  <div data-bind="foreach: global_settings.settings.plugins.enclosure.temperature_control">
+  <div data-bind="foreach: global_settings.settings.plugins.enclosure2.temperature_control">
     <div class="control-group">
       <div class="controls">
         <label class="checkbox">
@@ -80,7 +80,7 @@
     </div>
     <div  id="temperature_control_content">
       <div class="control-group">
-        <label class="control-label" for="settings-enclosure-heaterpin">{{ _('Temp Control Pin') }}</label>
+        <label class="control-label" for="settings-enclosure2-heaterpin">{{ _('Temp Control Pin') }}</label>
         <div class="controls">
           <input type="text" class="input-block-level" data-bind="value: gpioPin">
           <span class="help-inline">GPIO pin used to control Heater.</span>
@@ -125,7 +125,7 @@
 </form>
 <h4>{{ _('Raspberry Pi Outputs') }}</h4>
 <form class="form-horizontal">
-  <div data-bind="foreach: global_settings.settings.plugins.enclosure.rpi_outputs">
+  <div data-bind="foreach: global_settings.settings.plugins.enclosure2.rpi_outputs">
     <!-- <div class="controls">
     <h5>IO <span data-bind="text: $index"> </span></h5>
   </div> -->
@@ -133,7 +133,7 @@
     <label class="control-label">{{ _('IO Label') }}</label>
     <div class="controls">
       <input type="text" class="input-block-level" data-bind="value: label">
-      <span class="help-inline">Name displayed on Enclosure Tab</span>
+      <span class="help-inline">Name displayed on Enclosure2 Tab</span>
     </div>
   </div>
   <div class="control-group">
@@ -234,7 +234,7 @@
 <!-- /ko -->
 <!-- ko if: ($data.outputType() == "neopixel")  -->
 <div class="control-group">
-  <label class="control-label" for="settings-enclosure-dhtPin">{{ _('Microcontroller Address') }}</label>
+  <label class="control-label" for="settings-enclosure2-dhtPin">{{ _('Microcontroller Address') }}</label>
   <div class="controls">
     <input type="text" class="input-block-level" data-bind="value: microAddress">
     <span class="help-inline">Microcontroller address in HEX value, you can find it by runing <code>i2cdetect -y 1</code> on your Raspberry Pi</span>
@@ -278,7 +278,7 @@
 </form>
 <h4>{{ _('Raspberry Pi Inputs') }}</h4>
 <form class="form-horizontal">
-  <div data-bind="foreach: global_settings.settings.plugins.enclosure.rpi_inputs">
+  <div data-bind="foreach: global_settings.settings.plugins.enclosure2.rpi_inputs">
     <div class="control-group">
       <label class="control-label">{{ _('IO Label') }}</label>
       <div class="controls">
@@ -327,7 +327,7 @@
   <!-- ko if: ($data.eventType() == "printer" || $data.eventType() == "gpio")  -->
   <div data-bind="attr: {id: 'input_io_' + $index() }">
     <div class="control-group">
-      <label class="control-label" for="settings-enclosure-io1">{{ _('Input IO Number') }}</label>
+      <label class="control-label" for="settings-enclosure2-io1">{{ _('Input IO Number') }}</label>
       <div class="controls">
         <input type="text" class="input-block-level" data-bind="value: gpioPin">
         <span class="help-inline">Input GPIO that will detect the event that should trigger the action. For example if you have a filament
@@ -364,7 +364,7 @@
           <div class="control-group">
             <label class="control-label"> Controlled IO</label>
             <div class="controls">
-              <select data-bind="options: $root.global_settings.settings.plugins.enclosure.rpi_outputs, optionsText: 'label',
+              <select data-bind="options: $root.global_settings.settings.plugins.enclosure2.rpi_outputs, optionsText: 'label',
               optionsValue: 'gpioPin', value: $data.controlledIO">
             </select>
             <span class="help-inline">When the event happen, you want control which IO?</span>
@@ -395,7 +395,7 @@
         <div class="control-group">
           <label class="control-label"> Controlled IO</label>
           <div class="controls">
-            <select data-bind="options: $root.global_settings.settings.plugins.enclosure.rpi_outputs, optionsText: 'label',
+            <select data-bind="options: $root.global_settings.settings.plugins.enclosure2.rpi_outputs, optionsText: 'label',
             optionsValue: 'gpioPin', value: $data.controlledIO">
           </select>
           <span class="help-inline">When the event happen, you want control which IO?</span>
@@ -455,16 +455,16 @@
       <button class="btn pull-right" data-bind="click: function() { $root.addRpiInput(); }">Add Inputs...</button>
     </div>
   </form>
-  <a href="#" class="muted" data-toggle="collapse" data-target="#advanced_enclosure">
+  <a href="#" class="muted" data-toggle="collapse" data-target="#advanced_enclosure2">
     <i class="icon-caret-right"></i>
     Advanced options
   </a>
-  <div id="advanced_enclosure" class="accordion-body collapse">
+  <div id="advanced_enclosure2" class="accordion-body collapse">
     <form class="form-horizontal">
       <div class="control-group">
         <div class="controls">
           <label class="checkbox">
-            <input type="checkbox" data-bind="checked: global_settings.settings.plugins.enclosure.debug">  {{ _('Enable debug info') }}
+            <input type="checkbox" data-bind="checked: global_settings.settings.plugins.enclosure2.debug">  {{ _('Enable debug info') }}
           </label>
           <span class="help-inline">Log additional information on octoprint log to help trouble shoot the plugin</span>
         </div>
@@ -472,15 +472,15 @@
       <div class="control-group">
         <div class="controls">
           <label class="checkbox">
-            <input type="checkbox" data-bind="checked: global_settings.settings.plugins.enclosure.showTempNavbar">  {{ _('Show temp navbar') }}
+            <input type="checkbox" data-bind="checked: global_settings.settings.plugins.enclosure2.showTempNavbar">  {{ _('Show temp navbar') }}
           </label>
-          <span class="help-inline">Display enclosure temperature and humidity on navbar</span>
+          <span class="help-inline">Display enclosure2 temperature and humidity on navbar</span>
         </div>
       </div>
       <div class="control-group">
         <div class="controls">
           <label class="checkbox">
-            <input type="checkbox" data-bind="checked: global_settings.settings.plugins.enclosure.useBoardPinNumber">  {{ _('Use Board Pin #') }}
+            <input type="checkbox" data-bind="checked: global_settings.settings.plugins.enclosure2.useBoardPinNumber">  {{ _('Use Board Pin #') }}
           </label>
           <span class="help-inline">Use BOARD pin numbers instead of BCM pin numbers</span>
         </div>
@@ -494,14 +494,14 @@
         </div>
         <label class="control-label" >{{ _('Filament Detection Timeout') }}</label>
         <div class="controls">
-          <input type="text" class="input-block-level" data-bind="value: global_settings.settings.plugins.enclosure.filamentSensorTimeout">
+          <input type="text" class="input-block-level" data-bind="value: global_settings.settings.plugins.enclosure2.filamentSensorTimeout">
           <span class="help-inline">Time that filament sensor will be inactive after sensing end of filament. This is to avoid sending multiple M600
             commands to the printer.</span>
           </div>
           <div class="control-group">
-            <label class="control-label" for="settings-enclosure-filament-sensor">{{ _('Filament Change Gcode') }}</label>
+            <label class="control-label" for="settings-enclosure2-filament-sensor">{{ _('Filament Change Gcode') }}</label>
             <div class="controls">
-              <textarea rows="4" class="block" data-bind="value: global_settings.settings.plugins.enclosure.filamentSensorGcode"></textarea>
+              <textarea rows="4" class="block" data-bind="value: global_settings.settings.plugins.enclosure2.filamentSensorGcode"></textarea>
               <span class="help-inline">GCODE that will be sent to the printer to pause and allow filament to be changed.
                 You should add <code>;</code> on the end of every line sent to the printer</span>
               </div>
@@ -509,27 +509,27 @@
             <div class="control-group">
               <label class="control-label" >{{ _('Notification Provider') }}</label>
               <div class="controls">
-                <select data-bind="value: global_settings.settings.plugins.enclosure.notificationProvider">
+                <select data-bind="value: global_settings.settings.plugins.enclosure2.notificationProvider">
                   <option value="disabled">Disabled</option>
                   <option value="ifttt">IFTTT</option>
                 </select>
               </div>
             </div>
-            <!-- ko if: ($root.global_settings.settings.plugins.enclosure.notificationProvider() == "ifttt")  -->
+            <!-- ko if: ($root.global_settings.settings.plugins.enclosure2.notificationProvider() == "ifttt")  -->
             <div class="control-group">
               <label class="control-label">{{ _('Event Name') }}</label>
               <div class="controls">
-                <input type="text" class="input-block-level" data-bind="value: global_settings.settings.plugins.enclosure.event_name">
+                <input type="text" class="input-block-level" data-bind="value: global_settings.settings.plugins.enclosure2.event_name">
                 <span class="help-inline">Event name that was configured on the maker chanel of IFTTT, don't use space between the words</span>
               </div>
             </div>
             <div class="control-group">
               <label class="control-label">{{ _('IFTTT API KEY') }}</label>
               <div class="controls">
-                <input type="text" class="input-block-level" data-bind="value:global_settings.settings.plugins.enclosure.apiKEY">
+                <input type="text" class="input-block-level" data-bind="value:global_settings.settings.plugins.enclosure2.apiKEY">
               </div>
             </div>
-            <div class="control-group" data-bind="foreach: global_settings.settings.plugins.enclosure.notifications">
+            <div class="control-group" data-bind="foreach: global_settings.settings.plugins.enclosure2.notifications">
               <div class="controls">
                 <label class="checkbox">
                   <input type="checkbox" data-bind="checked: temperatureAction">  {{ _('Notify temperature actions') }}

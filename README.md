@@ -1,14 +1,14 @@
-# OctoPrint-Enclosure
+# OctoPrint-Enclosure2
 
-**Control pretty much everything that you might want to do on your raspberry pi / octoprint / enclosure**
+**Control pretty much everything that you might want to do on your raspberry pi / octoprint / enclosure2**
 
 Here is a list of possibilities:
-* Temperature sensor on your enclosure or near your printer
-* Heater on your enclosure and keep the temperature nice and high for large ABS 
+* Temperature sensor on your enclosure2 or near your printer
+* Heater on your enclosure2 and keep the temperature nice and high for large ABS 
 * Active cooling for good PLA printing
 * Mechanical buttons to pause and resume printer jobs
 * Multiple filament sensors for dual or more extrusion
-* Alarm when enclosure temperature reaches some sort of value
+* Alarm when enclosure2 temperature reaches some sort of value
 
 Find the plugin useful? Buy me a coffe.
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/VitorHenrique/2)
@@ -17,7 +17,7 @@ Check pictures and more information on thingiverse: http://www.thingiverse.com/t
 
 **Software**
 
-Install the plugin using the Plugin Manager bundled with OctoPrint, you can search for the Enclosure plugin or just use the url: https://github.com/vitormhenrique/OctoPrint-Enclosure/archive/master.zip.
+Install the plugin using the Plugin Manager bundled with OctoPrint, you can search for the Enclosure2 plugin or just use the url: https://github.com/vitormhenrique/OctoPrint-Enclosure2/archive/master.zip.
 
 To control the encosure temperature or get temperature trigged events, you need to install and configure a temperature sensor. This plugin can support DHT11, DHT22, AM2302, DS18B20, SI7021, BME280 and TMP102 temperature sensors.
 
@@ -78,7 +78,7 @@ The relays module that I used can be found [here](https://www.amazon.com/gp/prod
 
 * Heater
 
-For heating my enclosure I got a $15 lasko inside my enclosure. I opened it and added a relay to the mains wire. If you’re uncomfortable soldering or dealing with high voltage, please check out the [PowerSwitch Tail II](http://www.powerswitchtail.com/Pages/default.aspx) . The PowerSwitch Tail II is fully enclosed, making it a lot safer.
+For heating my enclosure2 I got a $15 lasko inside my enclosure2. I opened it and added a relay to the mains wire. If you’re uncomfortable soldering or dealing with high voltage, please check out the [PowerSwitch Tail II](http://www.powerswitchtail.com/Pages/default.aspx) . The PowerSwitch Tail II is fully enclosed, making it a lot safer.
 
 **CAUTION: VOLTAGE ON MAINS WIRE CAN KILL YOU, ONLY ATTEMPT TO DO THIS IF YOU KNOW WHAT YOU ARE DOING, AND DO AT YOUR OWN RISK**
 
@@ -90,7 +90,7 @@ You can get a [5V small fan](https://www.amazon.com/gp/product/B003FO0LG6/ref=oh
 
 * Filament sensor
 
-You have the ability to add a filament sensor to the enclosure, it will automatically pause the print and run a gcode command to change the filament if you run out of filament, I can be any type of filament sensor, the sensor should connect to ground if is set as an "active low" when the filament run out or 3.3v if the sensor is set as "active high" when detected the end of filament, it does not matter if it is normally open or closed, that will only interfere on your wiring. I'm using the following sensor:
+You have the ability to add a filament sensor to the enclosure2, it will automatically pause the print and run a gcode command to change the filament if you run out of filament, I can be any type of filament sensor, the sensor should connect to ground if is set as an "active low" when the filament run out or 3.3v if the sensor is set as "active high" when detected the end of filament, it does not matter if it is normally open or closed, that will only interfere on your wiring. I'm using the following sensor:
 
 http://www.thingiverse.com/thing:1698397
 
@@ -102,7 +102,7 @@ Open the setting screen and find the plugin configuration. You can enable temper
 
 For temperature control you can enable automatically starting up the temperature control once the print starts with a set temperature.
 
-Outputs are meant to control anything, lights, locker, extra enclosure fans etc... You can even use a PowerSwitch Tail II and completely shut down your printer after the print job is done. You can add delays and automatically start and shutdown the GPIO. 
+Outputs are meant to control anything, lights, locker, extra enclosure2 fans etc... You can even use a PowerSwitch Tail II and completely shut down your printer after the print job is done. You can add delays and automatically start and shutdown the GPIO. 
 
 Inputs have basically three different types:
 
@@ -110,7 +110,7 @@ Inputs have basically three different types:
 * Printer
 * GPIO
 
-Temperature inputs will control a GPIO output after a certain temperature is met. This is useful if you want to add some sort of alarm near your printer, or even build some fire extinguisher on your enclosure. Note that I'm not responsible for any damage caused by fires, you should have proper smoke detectors on your house installed by professionals.
+Temperature inputs will control a GPIO output after a certain temperature is met. This is useful if you want to add some sort of alarm near your printer, or even build some fire extinguisher on your enclosure2. Note that I'm not responsible for any damage caused by fires, you should have proper smoke detectors on your house installed by professionals.
 
 Printer inputs will trigger Printer actions when the configured GPIO receives a signal. The actions can be Resume and Pause a print job or Change Filament. You can use the "change filament" action and set up the input GPIO according to your filament sensor, for example, if your filament sensor connects to ground when detects the end of the filament, you should choose PULL UP resistors and detect the event on the falling edge.
 You can also add mechanical buttons to pause, resume and change filaments near or printer for convenience.
@@ -142,7 +142,7 @@ appearance:
       - control
       - gcodeviewer
       - terminal
-      - plugin_enclosure
+      - plugin_enclosure2
       - timelapse
 ```
 

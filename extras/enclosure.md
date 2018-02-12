@@ -1,8 +1,8 @@
 ---
 layout: plugin
 
-id: enclosure
-title: OctoPrint-Enclosure
+id: enclosure2
+title: OctoPrint-Enclosure2
 description: TODO
 author: Vitor Henrique
 license: AGPLv3
@@ -10,9 +10,9 @@ license: AGPLv3
 # TODO
 date: today's date in format YYYY-MM-DD, e.g. 2015-04-21
 
-homepage: https://github.com/vitormhenirque/OctoPrint-Enclosure
-source: https://github.com/vitormhenirque/OctoPrint-Enclosure
-archive: https://github.com/vitormhenirque/OctoPrint-Enclosure/archive/master.zip
+homepage: https://github.com/vitormhenirque/OctoPrint-Enclosure2
+source: https://github.com/vitormhenirque/OctoPrint-Enclosure2
+archive: https://github.com/vitormhenirque/OctoPrint-Enclosure2/archive/master.zip
 
 # TODO set this to true if your plugin uses the dependency_links setup parameter to include
 # library versions not yet published on PyPi. SHOULD ONLY BE USED IF THERE IS NO OTHER OPTION!
@@ -52,4 +52,4 @@ compatibility:
 ---
 
 **TODO**: Longer description of your plugin, configuration examples etc. This part will be visible on the page at
-http://plugins.octoprint.org/plugin/enclosure/
+http://plugins.octoprint.org/plugin/enclosure2/

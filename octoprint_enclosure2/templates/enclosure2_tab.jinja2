@@ -1,6 +1,6 @@
-<div data-bind="foreach: global_settings.settings.plugins.enclosure.temperature_reading">
+<div data-bind="foreach: global_settings.settings.plugins.enclosure2.temperature_reading">
   <div data-bind="visible: isEnabled">
-    <h4>{{ _('Enclosure Temperature') }}</h4>
+    <h4>{{ _('Enclosure2 Temperature') }}</h4>
     <table class="table table-bordered table-hover" style="table-layout: fixed; width: 100%; margin-top: 20px">
       <tr>
         <th style="width: 18%"></th>
@@ -8,17 +8,17 @@
         <th style="width: 35%">{{ _('Target') }}</th>
       </tr>
       <tr>
-        <th style="vertical-align: middle">{{ _('Enclosure') }}</th>
+        <th style="vertical-align: middle">{{ _('Enclosure2') }}</th>
         <td style="text-align: right; vertical-align: middle">
-          <span data-bind="html: $root.enclosureTemp"></span>
+          <span data-bind="html: $root.enclosure2Temp"></span>
           <span class="add-on" data-bind="visible: $data.useFahrenheit">&deg;F</span>
           <span class="add-on" data-bind="visible: !$data.useFahrenheit()">&deg;C</span>
         </td>
         <td style="vertical-align: middle; overflow: visible">
-          <div data-bind="foreach: $root.global_settings.settings.plugins.enclosure.temperature_control">
+          <div data-bind="foreach: $root.global_settings.settings.plugins.enclosure2.temperature_control">
             <div class="input-append" data-bind="visible: isEnabled">
-              <input type="text" class="input-mini text-right tempInput" id="enclosureSetTemp"
-              data-bind="attr: {placeholder:cleanTemperature($root.requestEnclosureSetTemperature())}">
+              <input type="text" class="input-mini text-right tempInput" id="enclosure2SetTemp"
+              data-bind="attr: {placeholder:cleanTemperature($root.requestEnclosure2SetTemperature())}">
               <span class="add-on" data-bind="visible: $parent.useFahrenheit">&deg;F</span>
               <span class="add-on" data-bind="visible: !$parent.useFahrenheit()">&deg;C</span>
               <div class="btn-group" >
@@ -37,10 +37,10 @@
           </div>
         </td>
       </tr>
-      <tr data-bind="visible: $root.enclosureHumidity">
+      <tr data-bind="visible: $root.enclosure2Humidity">
         <th style="vertical-align: middle">{{ _('Humidity') }}</th>
         <td style="text-align: right; vertical-align: middle">
-          <span data-bind="html: $root.enclosureHumidity"></span>
+          <span data-bind="html: $root.enclosure2Humidity"></span>
           <span class="add-on">%</span>
         </td>
         <th></th>
@@ -50,7 +50,7 @@
 </div>
 
 
-<div data-bind="foreach: global_settings.settings.plugins.enclosure.rpi_outputs">
+<div data-bind="foreach: global_settings.settings.plugins.enclosure2.rpi_outputs">
   <!-- ko if: ($data.outputType() == "regular")  -->
   <h4><p data-bind="html: label"></p></h4>
   <button type="submit" data-bind="click: $root.handleIO.bind($data, [gpioPin(), 'on']),

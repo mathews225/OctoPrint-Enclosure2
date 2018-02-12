@@ -17,7 +17,7 @@ import requests
 
 scheduler = sched.scheduler(time.time, time.sleep)
 
-class EnclosurePlugin(octoprint.plugin.StartupPlugin,
+class Enclosure2Plugin(octoprint.plugin.StartupPlugin,
             octoprint.plugin.TemplatePlugin,
             octoprint.plugin.SettingsPlugin,
             octoprint.plugin.AssetPlugin,
@@ -26,9 +26,9 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin,
 
     previousTempControlStatus = False
     currentTempControlStatus = False
-    enclosureSetTemperature=0.0
-    enclosureCurrentTemperature=0.0
-    enclosureCurrentHumidity=0.0
+    enclosure2SetTemperature=0.0
+    enclosure2CurrentTemperature=0.0
+    enclosure2CurrentHumidity=0.0
     lastFilamentEndDetected=0
     temperature_reading = []
     temperature_control = []
@@ -41,7 +41,7 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin,
     disable_temeprature_log = True
 
     def startTimer(self):
-        self._checkTempTimer = RepeatedTimer(10, self.checkEnclosureTemp, None, None, True)
+        self._checkTempTimer = RepeatedTimer(10, self.checkEnclosure2Temp, None, None, True)
         self._checkTempTimer.start()
 
     def toFloat(self, value):
@@ -76,17 +76,17 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin,
         self.updateOutputUI()
 
     #~~ Blueprintplugin mixin
-    @octoprint.plugin.BlueprintPlugin.route("/setEnclosureTemperature", methods=["GET"])
-    def setEnclosureTemperature(self):
-        self.enclosureSetTemperature = flask.request.values["enclosureSetTemp"]
+    @octoprint.plugin.BlueprintPlugin.route("/setEnclosure2Temperature", methods=["GET"])
+    def setEnclosure2Temperature(self):
+        self.enclosure2SetTemperature = flask.request.values["enclosure2SetTemp"]
         if self._settings.get(["debug"]) == True:
-            self._logger.info("DEBUG -> Seting enclosure temperature: %s",self.enclosureSetTemperature)
+            self._logger.info("DEBUG -> Seting enclosure2 temperature: %s",self.enclosure2SetTemperature)
         self.handleTemperatureControl()
-        return flask.jsonify(enclosureSetTemperature=self.enclosureSetTemperature,enclosureCurrentTemperature=self.enclosureCurrentTemperature)
+        return flask.jsonify(enclosure2SetTemperature=self.enclosure2SetTemperature,enclosure2CurrentTemperature=self.enclosure2CurrentTemperature)
 
-    @octoprint.plugin.BlueprintPlugin.route("/getEnclosureSetTemperature", methods=["GET"])
-    def getEnclosureSetTemperature(self):
-        return str(self.enclosureSetTemperature)
+    @octoprint.plugin.BlueprintPlugin.route("/getEnclosure2SetTemperature", methods=["GET"])
+    def getEnclosure2SetTemperature(self):
+        return str(self.enclosure2SetTemperature)
 
     @octoprint.plugin.BlueprintPlugin.route("/clearGPIOMode", methods=["GET"])
     def clearGPIOMode(self):
@@ -111,9 +111,9 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin,
         return '{' + getOutputStatusresult + '}'
     
 
-    @octoprint.plugin.BlueprintPlugin.route("/getEnclosureTemperature", methods=["GET"])
-    def getEnclosureTemperature(self):
-        return str(self.enclosureCurrentTemperature)
+    @octoprint.plugin.BlueprintPlugin.route("/getEnclosure2Temperature", methods=["GET"])
+    def getEnclosure2Temperature(self):
+        return str(self.enclosure2CurrentTemperature)
 
     @octoprint.plugin.BlueprintPlugin.route("/setIO", methods=["GET"])
     def setIO(self):
@@ -184,7 +184,7 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin,
             self._logger.warn(message)
             pass
 
-    def checkEnclosureTemp(self):
+    def checkEnclosure2Temp(self):
         try:
             for temp_reader in self.temperature_reading:
                 if temp_reader['isEnabled']:
@@ -207,17 +207,17 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin,
                         hum = 0
 
                     if temp != -1 and hum != -1:
-                        self.enclosureCurrentTemperature = round(self.toFloat(temp),1) if not temp_reader['useFahrenheit'] else round(self.toFloat(temp)*1.8 + 32,1)
-                        self.enclosureCurrentHumidity = round(self.toFloat(hum),1)
+                        self.enclosure2CurrentTemperature = round(self.toFloat(temp),1) if not temp_reader['useFahrenheit'] else round(self.toFloat(temp)*1.8 + 32,1)
+                        self.enclosure2CurrentHumidity = round(self.toFloat(hum),1)
 
                     if self._settings.get(["debug"]) == True and not self.disable_temeprature_log:
-                        self._logger.info("Temperature: %s humidity %s", self.enclosureCurrentTemperature,self.enclosureCurrentHumidity)
+                        self._logger.info("Temperature: %s humidity %s", self.enclosure2CurrentTemperature,self.enclosure2CurrentHumidity)
 
-                    self._plugin_manager.send_plugin_message(self._identifier, dict(enclosuretemp=self.enclosureCurrentTemperature,enclosureHumidity=self.enclosureCurrentHumidity))
+                    self._plugin_manager.send_plugin_message(self._identifier, dict(enclosure2temp=self.enclosure2CurrentTemperature,enclosure2Humidity=self.enclosure2CurrentHumidity))
                     self.handleTemperatureControl()
                     self.handleTemperatureEvents()
         except Exception as ex:
-            template = "An exception of type {0} occurred on checkEnclosureTemp. Arguments:\n{1!r}"
+            template = "An exception of type {0} occurred on checkEnclosure2Temp. Arguments:\n{1!r}"
             message = template.format(type(ex).__name__, ex.args)
             self._logger.warn(message)
             pass
@@ -226,14 +226,14 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin,
         for rpi_input in self.rpi_inputs:
             if self.toFloat(rpi_input['setTemp']) == 0:
                 continue
-            if rpi_input['eventType']=='temperature' and (self.toFloat(rpi_input['setTemp']) < self.toFloat(self.enclosureCurrentTemperature)):
+            if rpi_input['eventType']=='temperature' and (self.toFloat(rpi_input['setTemp']) < self.toFloat(self.enclosure2CurrentTemperature)):
                 for rpi_output in self.rpi_outputs:
                     if self.toInt(rpi_input['controlledIO']) == self.toInt(rpi_output['gpioPin']):
                         val = GPIO.LOW if rpi_output['activeLow'] else GPIO.HIGH
                         self.writeGPIO(self.toInt(rpi_output['gpioPin']), val)
                         for notification in self.notifications:
                             if notification['temperatureAction']:
-                                msg = "Temperature action: enclosure temperature exceed " +rpi_input['setTemp']
+                                msg = "Temperature action: enclosure2 temperature exceed " +rpi_input['setTemp']
                                 self.sendNotification(msg)
 
     def readDhtTemp(self,sensor,pin):
@@ -333,12 +333,12 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin,
         for control in self.temperature_control:
             if control['isEnabled'] == True:
                 if control['controlType'] == 'heater':
-                    self.currentTempControlStatus = self.toFloat(self.enclosureCurrentTemperature)<self.toFloat(self.enclosureSetTemperature)
+                    self.currentTempControlStatus = self.toFloat(self.enclosure2CurrentTemperature)<self.toFloat(self.enclosure2SetTemperature)
                 else:
-                    if self.toFloat(self.enclosureSetTemperature) == 0:
+                    if self.toFloat(self.enclosure2SetTemperature) == 0:
                         self.currentTempControlStatus = False
                     else:
-                        self.currentTempControlStatus = self.toFloat(self.enclosureCurrentTemperature)>self.toFloat(self.enclosureSetTemperature)
+                        self.currentTempControlStatus = self.toFloat(self.enclosure2CurrentTemperature)>self.toFloat(self.enclosure2SetTemperature)
                 if self.currentTempControlStatus != self.previousTempControlStatus:
                     if self.currentTempControlStatus:
                         self._logger.info("Turning gpio to control temperature on.")
@@ -527,7 +527,7 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin,
                         self._printer.cancel_print()
                     elif rpi_input['printerAction'] == 'stopTemperatureControl':
                         self._logger.info("Printer action stoping temperature control.")
-                        self.enclosureSetTemperature = 0;
+                        self.enclosure2SetTemperature = 0;
                         self.handleTemperatureControl()
                     for notification in self.notifications:
                         if notification['printerAction']:
@@ -680,13 +680,13 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin,
             scheduler.run()
             for control in self.temperature_control:
                 if control['autoStartup'] == True:
-                    self.enclosureSetTemperature = self.toInt(control['defaultTemp'])
-                    self._plugin_manager.send_plugin_message(self._identifier, dict(enclosureSetTemp=self.enclosureSetTemperature))
+                    self.enclosure2SetTemperature = self.toInt(control['defaultTemp'])
+                    self._plugin_manager.send_plugin_message(self._identifier, dict(enclosure2SetTemp=self.enclosure2SetTemperature))
 
         elif event in (Events.PRINT_DONE, Events.PRINT_FAILED, Events.PRINT_CANCELLED):
             self.stopFilamentDetection()
-            self.enclosureSetTemperature = 0
-            self._plugin_manager.send_plugin_message(self._identifier, dict(enclosureSetTemp=self.enclosureSetTemperature))
+            self.enclosure2SetTemperature = 0
+            self._plugin_manager.send_plugin_message(self._identifier, dict(enclosure2SetTemp=self.enclosure2SetTemperature))
             for rpi_output in self.rpi_outputs:
                 if rpi_output['autoShutdown'] and rpi_output['outputType']=='regular':
                     value = True if rpi_output['activeLow'] else False
@@ -782,33 +782,33 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin,
     ##~~ AssetPlugin mixin
     def get_assets(self):
         return dict(
-            js=["js/enclosure.js","js/bootstrap-colorpicker.min.js"],
+            js=["js/enclosure2.js","js/bootstrap-colorpicker.min.js"],
             css=["css/bootstrap-colorpicker.css"]
         )
 
     ##~~ Softwareupdate hook
     def get_update_information(self):
         return dict(
-            enclosure=dict(
-                displayName="Enclosure Plugin",
+            enclosure2=dict(
+                displayName="Enclosure2 Plugin",
                 displayVersion=self._plugin_version,
 
                 # version check: github repository
                 type="github_release",
                 user="vitormhenrique",
-                repo="OctoPrint-Enclosure",
+                repo="OctoPrint-Enclosure2",
                 current=self._plugin_version,
 
                 # update method: pip
-                pip="https://github.com/vitormhenrique/OctoPrint-Enclosure/archive/{target_version}.zip"
+                pip="https://github.com/vitormhenrique/OctoPrint-Enclosure2/archive/{target_version}.zip"
             )
         )
 
-__plugin_name__ = "Enclosure Plugin"
+__plugin_name__ = "Enclosure2 Plugin"
 
 def __plugin_load__():
     global __plugin_implementation__
-    __plugin_implementation__ = EnclosurePlugin()
+    __plugin_implementation__ = Enclosure2Plugin()
 
     global __plugin_hooks__
     __plugin_hooks__ = {
